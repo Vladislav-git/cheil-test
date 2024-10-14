@@ -1,2 +1,44 @@
-version: '3'
-# your services for the task
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+  backend:
+    build: ./be
+    container_name: backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./be/.env
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+    # volumes:
+      # - ./be:/usr/src/app
+    # command: npm run seed # Optional: Runs seeder script during startup
+
+  frontend:
+    build: ./fe
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:
+    driver: bridge

@@ -50,3 +50,8 @@ Your solution will be evaluated based on the following criteria:
 If you have any questions or encounter any issues while completing the task, please don't hesitate to reach out to us for assistance. We're here to help!
 
 Good luck with the task, and we look forward to reviewing your submission!
+
+```
+docker-compose up -d --build
+docker exec -it backend node seeder.js
+```
